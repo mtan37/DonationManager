@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Add new donation{% endblock %}
+
+{% block content %}
+<h2>Add Donor</h2>
+<a href="{% url 'donations' %}" class="donation-button">View all donations</a>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}

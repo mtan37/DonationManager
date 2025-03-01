@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Add new donation{% endblock %}
+
+{% block content %}
+<ul>
+    <a href="{% url 'donor_creation' %}" class="donation-button">Create Donor Profile</a>
+</ul>
+{% if view.select_donor %}
+<h2>Select a donor for the new donation entry</h2>
+{% endif %}
+{% if not view.select_donor %}
+<h2>Donors</h2>
+{% endif %}
+<table>
+    <tr>
+        <th>Donor Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th></br></th>
+      </tr>
+    {% for donor in donor_list %}
+    <tr>
+        <td>{{ donor.name }}</td>
+        <td>{{ donor.address }}</td>
+        <td>{{ donor.email }}</td>
+        {% if view.select_donor %}
+        <td><a href="{% url 'donation_creation' donor_id=donor.pk%}" class="button">Select</a></td>
+        {% endif %}
+        {% if not view.select_donor %}
+        <td><a href="{% url 'donor_update' pk=donor.pk%}" class="button">Edit</a></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    
+</table>
+</form>
+{% endblock %}

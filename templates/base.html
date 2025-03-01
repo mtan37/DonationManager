@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>{% block title %}Donation Manager{% endblock %}</title>
+</head>
+
+<body>
+    <nav>
+        <ol>
+            <li style="display: inline"><a href="{% url 'donations' %}">Donations</a></li>
+            <li style="display: inline"><a href="#news">Distributions</a></li>
+            <li style="display: inline"><a href="{% url 'donors' %}">Donors</a></li>
+            <li style="display: inline"><a href="#about">Inventory</a></li>
+          </ol>
+    </nav>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
