@@ -2,7 +2,7 @@ from django.db import models
 
 
 class DonationType(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, primary_key=True)
 
 
 class Donor(models.Model):

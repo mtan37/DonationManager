@@ -15,11 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.contrib import admin
-from django.urls import path
-from donations import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path
+
+from donations import views
 
 urlpatterns = [
     path("", views.DonationView.as_view(), name="home"),
@@ -50,5 +51,10 @@ urlpatterns = [
         "update_donor/<int:pk>/", views.DonorUpdateView.as_view(), name="donor_update"
     ),
     path("add_donor/", views.DonorCreateView.as_view(), name="donor_creation"),
+    path(
+        "add_donation_type",
+        views.DonationTypeCreateView.as_view(),
+        name="add_donation_type",
+    ),
     path("admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

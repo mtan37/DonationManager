@@ -4,8 +4,8 @@
 
 {% block content %}
 <h2>Add donation</h2>
-<a href="{% url 'donations' %}" class="donation-button">View all donations</a>
-<a href="" class="donation-button">Create New Donor Type</a>
+<a href="{% url 'donations' %}" class="button">View all donations</a>
+<a href="{% url 'add_donation_type' %}" class="button">Add Donation Type</a>
 <form method="post">{% csrf_token %}
     <p>
         <label for="id_quantity">Donor:</label>

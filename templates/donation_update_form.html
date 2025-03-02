@@ -4,7 +4,7 @@
 
 {% block content %}
 <h2>Edit donation</h2>
-<a href="{% url 'donations' %}" class="donation-button">View all donations</a>
+<a href="{% url 'donations' %}" class="button">View all donations</a>
 
 <form method="post">{% csrf_token %}
     {{ form.as_p }}

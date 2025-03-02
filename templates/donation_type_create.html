@@ -3,10 +3,10 @@
 {% block title %}Add new donation{% endblock %}
 
 {% block content %}
-<h2>Add Donor</h2>
+<h2>Add donation</h2>
 <a href="{% url 'donations' %}" class="button">View all donations</a>
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Create">
+    <input type="submit" value="Add">
 </form>
 {% endblock %}

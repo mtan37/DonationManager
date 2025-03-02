@@ -1,9 +1,8 @@
-from .forms import ContactForm
-from django.views.generic.edit import FormView
-from django.views.generic.edit import CreateView, UpdateView
-from donations.models import Donation, Donor
 from django.shortcuts import get_object_or_404
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView
+
+from donations.models import Donation, DonationType, Donor
 
 
 class DonationView(generic.ListView):
@@ -22,12 +21,21 @@ class DonationCreateView(CreateView):
     donor_obj = None
     donor_name = ""
 
+    def get_form(self, *args, **kwargs):
+        form = super(DonationCreateView, self).get_form(*args, **kwargs)
+        form.fields["note"].required = False
+        return form
+
     def get_context_data(self, **kwargs):
         context = super(DonationCreateView, self).get_context_data(**kwargs)
         self.donor_obj = get_object_or_404(Donor, pk=self.kwargs["donor_id"])
         self.donor_name = self.donor_obj.name
-        context["donor"] = self.kwargs["donor_id"]
         return context
+
+    def form_valid(self, form):
+        self.donor_obj = get_object_or_404(Donor, pk=self.kwargs["donor_id"])
+        form.instance.donor = self.donor_obj
+        return super().form_valid(form)
 
 
 class DonationUpdateView(UpdateView):
@@ -62,3 +70,10 @@ class DonorUpdateView(UpdateView):
     model = Donor
     fields = ["name", "address", "email"]
     success_url = "/donor"
+
+
+class DonationTypeCreateView(CreateView):
+    template_name = "donation_type_create.html"
+    model = DonationType
+    fields = ["name"]
+    success_url = "/donation"
