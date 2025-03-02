@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.admin.widgets import AdminDateWidget
 
 from donations.models import Donation, DonationType, Donor
 
@@ -24,6 +25,7 @@ class DonationCreateView(CreateView):
     def get_form(self, *args, **kwargs):
         form = super(DonationCreateView, self).get_form(*args, **kwargs)
         form.fields["note"].required = False
+        form.fields["date"].widget = AdminDateWidget(attrs={"type": "date"})
         return form
 
     def get_context_data(self, **kwargs):
