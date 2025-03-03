@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Add new donation{% endblock %}
+
+{% block content %}
+<h2>Inventories</h2>
+<table>
+    <tr>
+        <th>Donation Type</th>
+        <th>Quantity</th>
+      </tr>
+    {% for inventory in inventory_list %}
+    <tr>
+        <td>{{ inventory.type }}</td>
+        <td>{{ inventory.quantity }}</td>
+    </tr>
+    {% endfor %}
+    
+</table>
+</form>
+{% endblock %}

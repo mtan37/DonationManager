@@ -1,9 +1,11 @@
 from django.shortcuts import get_object_or_404
 from django.views import generic
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
+from datetime import datetime
 from django.contrib.admin.widgets import AdminDateWidget
 
-from donations.forms import DonationDistributionCreateForm
+from donations.forms import DonationDistributionCreateForm, get_inventory
 from donations.models import Donation, DonationType, Donor, DonationDistribution
 
 
@@ -99,3 +101,27 @@ class DonationDistributionCreateView(CreateView):
         form = super(DonationDistributionCreateView, self).get_form(*args, **kwargs)
         form.fields["date"].widget = AdminDateWidget(attrs={"type": "date"})
         return form
+
+
+class InventoryView(TemplateView):
+    template_name = "inventories.html"
+
+    class Inventory:
+        def __init__(self, type, quantity):
+            self.type = type
+            self.quantity = quantity
+
+        type: str = ""
+        quantity: int = 0
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["inventory_list"] = []
+
+        for donation_type in DonationType.objects.all():
+            inv = InventoryView.Inventory(
+                donation_type.name,
+                get_inventory(donation_type.name, datetime.now().date()),
+            )
+            context["inventory_list"].append(inv)
+        return context
