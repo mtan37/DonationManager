@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Add new donation{% endblock %}
+
+{% block content %}
+<ul>
+    <a href="{% url 'add_donation_distribution' %}" class="button">Add Donation Distribution</a>
+</ul>
+<h2>Distributions</h2>
+<table>
+    <tr>
+        <th>Distribution Type</th>
+        <th>Quantity</th>
+        <th>Date</th>
+      </tr>
+    {% for distribution in donationdistribution_list %}
+    <tr>
+        <td>{{ distribution.type.name }}</td>
+        <td>{{ distribution.quantity }}</td>
+        <td>{{ distribution.date }}</td>
+    </tr>
+    {% endfor %}
+    
+</table>
+</form>
+{% endblock %}

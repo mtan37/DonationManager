@@ -56,5 +56,13 @@ urlpatterns = [
         views.DonationTypeCreateView.as_view(),
         name="add_donation_type",
     ),
+    path(
+        "distribution/", views.DonationDistributionView.as_view(), name="distributions"
+    ),
+    path(
+        "add_donation_distribution",
+        views.DonationDistributionCreateView.as_view(),
+        name="add_donation_distribution",
+    ),
     path("admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

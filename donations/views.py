@@ -3,7 +3,8 @@ from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.admin.widgets import AdminDateWidget
 
-from donations.models import Donation, DonationType, Donor
+from donations.forms import DonationDistributionCreateForm
+from donations.models import Donation, DonationType, Donor, DonationDistribution
 
 
 class DonationView(generic.ListView):
@@ -79,3 +80,22 @@ class DonationTypeCreateView(CreateView):
     model = DonationType
     fields = ["name"]
     success_url = "/donation"
+
+
+class DonationDistributionView(generic.ListView):
+    model = DonationDistribution
+    template_name = "distributions.html"
+
+    def get_queryset(self):
+        return DonationDistribution.objects.all()
+
+
+class DonationDistributionCreateView(CreateView):
+    template_name = "distribution_create.html"
+    form_class = DonationDistributionCreateForm
+    success_url = "/distribution"
+
+    def get_form(self, *args, **kwargs):
+        form = super(DonationDistributionCreateView, self).get_form(*args, **kwargs)
+        form.fields["date"].widget = AdminDateWidget(attrs={"type": "date"})
+        return form
